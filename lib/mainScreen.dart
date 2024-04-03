@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:jobapp/chat.dart';
+import 'package:jobapp/devicemanager.dart';
 import 'package:jobapp/drawer/ZoomNotifier.dart';
 import 'package:jobapp/drawer/drawerScreen.dart';
 import 'package:jobapp/home.dart/home.dart';
+import 'package:jobapp/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
@@ -36,22 +38,22 @@ class _mainScreenState extends State<mainScreen> {
     var zoomnotifirer = Provider.of<ZoomNotifier>(context);
     switch (zoomnotifirer.currentIndex) {
       case 0:
-        return const home();
+        return const Home();
         break;
       case 1:
         return const chat();
         break;
       case 2:
-        return const home();
+        return const Home();
         break;
       case 3:
-        return const home();
+        return const deviceManager();
         break;
       case 4:
-        return const home();
+        return const Profile();
         break;
       default:
-        return const home();
+        return const Home();
     }
   }
 }
