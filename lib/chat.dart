@@ -13,7 +13,7 @@ class _chatState extends State<chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('chat page'),
+        title: const Text('chat page'),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.menu),

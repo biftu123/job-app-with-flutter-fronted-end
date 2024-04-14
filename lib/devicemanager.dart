@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:jobapp/controller/logInNotifier.dart';
 import 'package:jobapp/controller/onbordnotifier.dart';
 
 import 'package:jobapp/deviceInfo.dart';
-import 'package:jobapp/drawer/ZoomNotifier.dart';
+
 import 'package:provider/provider.dart';
 
 class deviceManager extends StatefulWidget {
@@ -18,7 +19,9 @@ class _deviceManagerState extends State<deviceManager> {
 
   @override
   Widget build(BuildContext context) {
-    var onboard = Provider.of<OnbordNotifier>(context);
+    Provider.of<OnbordNotifier>(context);
+  
+
     return Scaffold(
       appBar: AppBar(
         title: Text('chat page'),
@@ -59,12 +62,12 @@ class _deviceManagerState extends State<deviceManager> {
               ],
             ),
           ),
-          Consumer<ZoomNotifier>(builder: (context, ZoomNotifier, child) {
+          Consumer<logInNotfier>(builder: (context, logInNotfier, child) {
             return Align(
               alignment: Alignment.bottomCenter,
               child: GestureDetector(
                 onTap: () {
-                  ZoomNotifier.currentIndex = 0;
+                  logInNotfier.userlogout;
                 },
                 child: Text(
                   "Sign Out from all device",

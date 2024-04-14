@@ -41,9 +41,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        "assets/images/profile image.png",
-                      ),
+                      child: Image.network('https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg')
                     ),
                     const SizedBox(width: 10),
                     Column(

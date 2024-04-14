@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+
 import 'package:jobapp/controller/logInNotifier.dart';
-import 'package:jobapp/mainScreen.dart';
+import 'package:jobapp/model/request/loginrequst.dart';
 import 'package:provider/provider.dart';
 import 'package:jobapp/signUp.dart';
 
-class logIn extends StatefulWidget {
-  const logIn({Key? key});
+class LogIn extends StatefulWidget {
+  const LogIn({Key? key});
 
   @override
-  State<logIn> createState() => _logInState();
+  State<LogIn> createState() => _LogInState();
 }
 
-class _logInState extends State<logIn> {
+class _LogInState extends State<LogIn> {
   final _formKey = GlobalKey<FormState>(); // Key for the Form widget
 
   TextEditingController email = TextEditingController();
@@ -20,7 +21,6 @@ class _logInState extends State<logIn> {
   @override
   void dispose() {
     super.dispose();
-
     email.dispose();
     password.dispose();
   }
@@ -29,7 +29,7 @@ class _logInState extends State<logIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'LOGIN',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -43,17 +43,13 @@ class _logInState extends State<logIn> {
               key: _formKey, // Assign the key to the Form
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     "WELCOME BACK",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
-                  Text("Fill in the login form"),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const Text("Fill in the login form"),
+                  const SizedBox(height: 10),
                   TextFormField(
                     controller: email,
                     decoration: InputDecoration(
@@ -61,7 +57,7 @@ class _logInState extends State<logIn> {
                       hintText: 'Enter email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 2,
                         ),
                       ),
@@ -73,9 +69,7 @@ class _logInState extends State<logIn> {
                       return null;
                     },
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   TextFormField(
                     controller: password,
                     obscureText: logInNotifier.obscureText,
@@ -84,14 +78,13 @@ class _logInState extends State<logIn> {
                       hintText: 'Enter password',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 2,
                         ),
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
-                          logInNotifier.obscureText =
-                              !logInNotifier.obscureText;
+                          logInNotifier.obscureText = !logInNotifier.obscureText;
                         },
                         icon: Icon(logInNotifier.obscureText
                             ? Icons.visibility_off
@@ -105,36 +98,39 @@ class _logInState extends State<logIn> {
                       return null;
                     },
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
+                  const SizedBox(height: 25),
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // Handle form submission logic (e.g., register user)
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => mainScreen()));
+                        Login model =
+                            Login(email: email.text, password: password.text);
+                        logInNotifier.userlogin(context, model);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('Sign in failed. Check your credentials.'),
+                          ),
+                        );
                       }
                     },
-                    child: Text('SignUp'),
+                    child: const Text('Sign Up'),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don\'t have an account?'),
+                      const Text('Don\'t have an account?'),
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => SignUp(),
                           ));
                         },
-                        child: Text('Sign Up'),
+                        child: const Text('Sign Up'),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

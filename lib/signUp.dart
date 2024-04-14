@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jobapp/controller/logInNotifier.dart';
 import 'package:jobapp/controller/signUpNotifier.dart';
 import 'package:jobapp/logIn.dart';
+import 'package:jobapp/model/request/signuprequstmodel.dart';
 import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
@@ -26,6 +28,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    var loginnotifier = Provider.of<logInNotfier>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -130,7 +133,11 @@ class _SignUpState extends State<SignUp> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Handle form submission logic (e.g., register user)
+                        Signupmodel model = Signupmodel(
+                            username: name.text,
+                            email: email.text,
+                            password: password.text);
+                        signUpNotfier.userSignUp(context, model);
                       }
                     },
                     child: Text('SignUp'),
@@ -144,8 +151,9 @@ class _SignUpState extends State<SignUp> {
                       Text('Already have an account?'),
                       TextButton(
                         onPressed: () {
+                          loginnotifier.firsttime = !loginnotifier.firsttime;
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => logIn()));
+                              MaterialPageRoute(builder: (context) => LogIn()));
                         },
                         child: Text('Login'),
                       ),

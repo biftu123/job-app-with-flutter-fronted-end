@@ -24,4 +24,8 @@ List<String> skills = [
   'node.js',
   'dart',
   'java'
+  'flutter',
+  'node.js',
+  'dart',
+  'java'
 ];

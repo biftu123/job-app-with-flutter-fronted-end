@@ -16,7 +16,7 @@ class _drawerScreenState extends State<drawerScreen> {
   Widget build(BuildContext context) {
     return Consumer<ZoomNotifier>(builder: (contex, ZoomNotifier, child) {
       return GestureDetector(
-        onDoubleTap: () {
+        onTap: () {
           ZoomDrawer.of(context)!.toggle();
         },
         child: Scaffold(
