@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jobapp/controller/imageUploader.dart';
 import 'package:jobapp/controller/logInNotifier.dart';
 import 'package:jobapp/controller/onbordnotifier.dart';
+import 'package:jobapp/controller/profileNotifir.dart';
 import 'package:jobapp/controller/signUpNotifier.dart';
 import 'package:jobapp/drawer/ZoomNotifier.dart';
 import 'package:jobapp/logIn.dart';
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => signUpNotfier()),
         ChangeNotifierProvider(create: (_) => ZoomNotifier()),
          ChangeNotifierProvider(create: (_) => imageUploader()),
-        
+                 ChangeNotifierProvider(create: (_) => profilenotifir()),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

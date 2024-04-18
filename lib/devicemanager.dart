@@ -67,7 +67,7 @@ class _deviceManagerState extends State<deviceManager> {
               alignment: Alignment.bottomCenter,
               child: GestureDetector(
                 onTap: () {
-                  logInNotfier.userlogout;
+                  
                 },
                 child: Text(
                   "Sign Out from all device",

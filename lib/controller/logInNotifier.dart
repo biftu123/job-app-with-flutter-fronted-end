@@ -23,54 +23,58 @@ class logInNotfier extends ChangeNotifier {
     notifyListeners();
   }
 
-  userlogin(BuildContext context, Login model) {
+    userlogin(BuildContext context, Login model) {
     AuthHelper.login(model).then((response) {
       if (response && firsttime) {
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const ProfileDetails()));
+          MaterialPageRoute(builder: (context) => const ProfileDetails()),
+        );
       } else if (response && !firsttime) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const mainScreen()));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Login failed'),
-          ),
-        );
-      }
-    });
-  }
-updateuser(BuildContext context, UserupdaterequstModel model) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? userId = prefs.getString("userId"); // Remove the "await" keyword here
-  print(userId);
-  if (userId != null) { // Add a null check for userId
-    AuthHelper.updateuser(model, userId).then((response) {
-      if (response) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('update successful'),
-          ),
-        );
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const mainScreen()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('update failed'),
+            content: Text('Login failed'),
+            key: const Key('login_failed_snackbar'), // Add a unique key
           ),
         );
       }
     });
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('User ID not found'),
-      ),
-    );
   }
-}
+
+  
+  updateuser(BuildContext context, UserupdaterequstModel model) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString("userId");
+    print(userId);
+    if (userId != null) {
+      AuthHelper.updateuser(model, userId).then((response) {
+        if (response) {
+         
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const mainScreen()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('update failed'),
+              key: const Key('update_failed_snackbar'), // Add a unique key
+            ),
+          );
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('User ID not found'),
+          key: const Key('user_id_not_found_snackbar'), // Add a unique key
+        ),
+      );
+    }
+  }
+
   
 
   userlogout() async {
