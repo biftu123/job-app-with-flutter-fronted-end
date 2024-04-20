@@ -50,7 +50,7 @@ class logInNotfier extends ChangeNotifier {
     String? userId = prefs.getString("userId");
     print(userId);
     if (userId != null) {
-      AuthHelper.updateuser(model, userId).then((response) {
+      AuthHelper.updateuser(model, ).then((response) {
         if (response) {
          
           Navigator.of(context).push(

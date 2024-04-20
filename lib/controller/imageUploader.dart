@@ -20,6 +20,7 @@ class imageUploader extends ChangeNotifier {
       imageFil.add(_imageFile.path);
       uploader(_imageFile);
       imagePath = _imageFile.path;
+    
     }
   }
 
@@ -53,12 +54,10 @@ class imageUploader extends ChangeNotifier {
   Future<String?> uploader(XFile upload) async {
     File image = File(upload.path);
 
-  final ref = FirebaseStorage.instance
-      .ref()
-      .child("${uuid.v1()}.jpg");
-  await ref.putFile(image);
-  imageUrl = (await ref.getDownloadURL());
-  print(imageUrl);
-  return imageUrl;
+    final ref = FirebaseStorage.instance.ref().child("${uuid.v1()}.jpg");
+    await ref.putFile(image);
+    imageUrl = (await ref.getDownloadURL());
+    print(imageUrl);
+    return imageUrl;
   }
 }

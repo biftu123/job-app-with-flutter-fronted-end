@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jobapp/model/request/loginrequst.dart';
 import 'package:jobapp/model/request/profilres.dart';
+
 import 'package:jobapp/model/request/signuprequstmodel.dart';
 import 'package:jobapp/model/request/userupdaterequstmodel.dart';
 import 'package:jobapp/model/response/loginresonsemodel.dart';
@@ -16,7 +17,7 @@ class AuthHelper {
 
     try {
       var response = await client.post(
-          Uri.parse("http://192.168.14.23:4006/login"),
+          Uri.parse("http://192.168.197.23:4006/login"),
           body: jsonEncode(model),
           headers: requestHeaders);
 
@@ -33,6 +34,7 @@ class AuthHelper {
       } else {
         // Handle unsuccessful response (e.g., print error message)
         print("Login failed: Status code ${response.statusCode}");
+        print(Error());
         return false;
       }
     } catch (error) {
@@ -44,10 +46,7 @@ class AuthHelper {
     }
   }
 
-  static Future<bool> updateuser(
-    UserupdaterequstModel model,
-    String? userId,
-  ) async {
+  static Future<bool> updateuser(UserupdaterequstModel model) async {
     final client = http.Client();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -59,12 +58,13 @@ class AuthHelper {
 
     try {
       var response = await client.put(
-        Uri.parse("http://192.168.14.23:4006/users/"),
+        Uri.parse("http://192.168.197.23:4006/users/update/"),
         body: jsonEncode(model),
         headers: requestHeaders,
       );
 
       if (response.statusCode == 200) {
+        
         return true;
       } else {
         // Handle unsuccessful response (e.g., print error message)
@@ -92,23 +92,25 @@ class AuthHelper {
 
     try {
       var response = await client.get(
-        Uri.parse("http://192.168.14.23:4006/getuser/"),
+        Uri.parse("http://192.168.197.23:4006/users/getuser/"),
         headers: requestHeaders,
       );
 
       if (response.statusCode == 200) {
-        var profile = profileResFromJson(response.body);
-        print(profile);
-        return profile;
+        var responseBody = response.body;
+        if (responseBody.isNotEmpty) {
+          var profile = profileResFromJson(responseBody);
+          return profile;
+        } else {
+          throw Exception('Failed to get user profile: Empty response body');
+        }
       } else {
         // Handle unsuccessful response (e.g., print error message)
-        print("get failed: Status code ${response.statusCode}");
-        throw Exception("get failed");
+        throw Exception('Failed to get user profile: ${response.statusCode}');
       }
     } catch (error) {
       // Handle potential errors from the http package
-      print("Error during update: $error");
-      throw Exception("get failed");
+      throw Exception('Failed to get user profile: $error');
     } finally {
       client.close();
     }
@@ -120,7 +122,7 @@ class AuthHelper {
 
     try {
       var response = await client.post(
-          Uri.parse("http://192.168.14.23:4006/register"),
+          Uri.parse("http://192.168.197.23:4006/register"),
           body: jsonEncode(model),
           headers: requestHeaders);
 

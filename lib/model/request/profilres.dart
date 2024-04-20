@@ -1,3 +1,8 @@
+// To parse this JSON data, do
+//
+//     final profileRes = profileResFromJson(jsonString);
+
+
 import 'dart:convert';
 
 ProfileRes profileResFromJson(String str) => ProfileRes.fromJson(json.decode(str));
@@ -5,39 +10,37 @@ ProfileRes profileResFromJson(String str) => ProfileRes.fromJson(json.decode(str
 String profileResToJson(ProfileRes data) => json.encode(data.toJson());
 
 class ProfileRes {
-  final String username;
-  final String email;
-  final String location;
-  final List<String> skill;
-  final String phonenumber;
-  final String profile;
+    final String username;
+    final String email;
+    final List<String> skill;
+    final String profile;
+    final String location;
+    final String phonenumber;
 
-  ProfileRes({
-    required this.username,
-    required this.email,
-    required this.location,
-    required this.skill,
-    required this.phonenumber,
-    required this.profile,
-  });
+    ProfileRes({
+        required this.username,
+        required this.email,
+        required this.skill,
+        required this.profile,
+        required this.location,
+        required this.phonenumber,
+    });
 
-  factory ProfileRes.fromJson(Map<String, dynamic> json) => ProfileRes(
+    factory ProfileRes.fromJson(Map<String, dynamic> json) => ProfileRes(
         username: json["username"],
         email: json["email"],
-        location: json["location"],
         skill: List<String>.from(json["skill"].map((x) => x)),
+        profile: json["Profile"],
+        location: json["location"],
         phonenumber: json["phonenumber"],
-        profile: json["profile"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "username": username,
         "email": email,
-        "location": location,
         "skill": List<dynamic>.from(skill.map((x) => x)),
+        "Profile": profile,
+        "location": location,
         "phonenumber": phonenumber,
-        "profile": profile,
-      };
+    };
 }
-
-// Example usage:

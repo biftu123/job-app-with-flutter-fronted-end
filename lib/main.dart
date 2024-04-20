@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => signUpNotfier()),
         ChangeNotifierProvider(create: (_) => ZoomNotifier()),
          ChangeNotifierProvider(create: (_) => imageUploader()),
-                 ChangeNotifierProvider(create: (_) => profilenotifir()),
+                 ChangeNotifierProvider(create: (_) => Profilenotifir()),
 
       ],
       child: MaterialApp(

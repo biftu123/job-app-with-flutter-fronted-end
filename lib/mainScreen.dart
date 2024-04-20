@@ -50,7 +50,7 @@ class _mainScreenState extends State<mainScreen> {
         return const deviceManager();
         break;
       case 4:
-        return const Profile();
+        return const profile();
         break;
       default:
         return const Home();

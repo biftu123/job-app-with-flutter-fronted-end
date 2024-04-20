@@ -63,12 +63,12 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             imageUploader.imageFil.clear();
                             imageUploader.pickImage();
                           },
-                        child: CircleAvatar(
-    backgroundColor: Colors.blueAccent,
-    backgroundImage: imageUploader.imagePath != null
-        ? FileImage(File(imageUploader.imagePath!))
-        : null,
-  ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.blueAccent,
+                            backgroundImage: imageUploader.imagePath != null
+                                ? FileImage(File(imageUploader.imagePath!))
+                                : null,
+                          ),
                         );
                       },
                     ),
@@ -132,12 +132,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                               ),
                             ),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a professional skill';
-                            }
-                            return null;
-                          },
                         ),
                         SizedBox(height: 10),
                       ],
@@ -156,6 +150,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                               profile: imageprovider.imageUrl.toString(),
                             );
                             logInNotifier.updateuser(context, model);
+                            
                           }
                         },
                         child: Container(
