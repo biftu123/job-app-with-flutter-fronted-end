@@ -13,16 +13,17 @@ class SearchWidget extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.84,
+                width: MediaQuery.of(context).size.width * 0.74,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
                       Icons.search,
                       color: Colors.orange,
-                      size: 50,
+                      size: 20,
                     ),
                     SizedBox(
                       width: 20,
@@ -38,7 +39,7 @@ class SearchWidget extends StatelessWidget {
                 ),
               ),
               Icon(
-                Icons.font_download_off_rounded,
+                Icons.menu,
                 size: 20,
               )
             ],

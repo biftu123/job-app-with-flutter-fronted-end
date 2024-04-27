@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jobapp/controller/imageUploader.dart';
+import 'package:jobapp/controller/jobNotifire.dart';
 import 'package:jobapp/controller/logInNotifier.dart';
 import 'package:jobapp/controller/onbordnotifier.dart';
 import 'package:jobapp/controller/profileNotifir.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ZoomNotifier()),
          ChangeNotifierProvider(create: (_) => imageUploader()),
                  ChangeNotifierProvider(create: (_) => Profilenotifir()),
+                  ChangeNotifierProvider(create: (_) => jobNotifier()),
 
       ],
       child: MaterialApp(

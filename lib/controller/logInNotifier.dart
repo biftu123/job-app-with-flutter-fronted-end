@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jobapp/mainScreen.dart';
 import 'package:jobapp/model/request/loginrequst.dart';
+import 'package:jobapp/model/request/upskill.dart';
 import 'package:jobapp/model/request/userupdaterequstmodel.dart';
 
 import 'package:jobapp/profileDetails.dart';
@@ -75,7 +76,36 @@ class logInNotfier extends ChangeNotifier {
     }
   }
 
-  
+   upskill(BuildContext context, Upskill model) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString("userId");
+    print(userId);
+    if (userId != null) {
+      AuthHelper.updateskill(model).then((response) {
+        if (response) {
+         
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const mainScreen()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('update failed'),
+              key: const Key('update_failed_snackbar'), // Add a unique key
+            ),
+          );
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('User ID not found'),
+          key: const Key('user_id_not_found_snackbar'), // Add a unique key
+        ),
+      );
+    }
+  }
+
 
   userlogout() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

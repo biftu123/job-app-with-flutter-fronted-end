@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:jobapp/controller/jobNotifire.dart';
 import 'package:jobapp/controller/verticalTile.dart';
 import 'package:jobapp/home.dart/heading.dart';
 import 'package:jobapp/home.dart/jobholding.dart';
 import 'package:jobapp/home.dart/searchwidget.dart';
 import 'package:jobapp/job.dart';
 import 'package:jobapp/search.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key});
@@ -15,6 +17,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+      Provider.of<jobNotifier>(context, listen: false).jobget();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,71 +43,111 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Search \n Find & Apply",
-                style: TextStyle(
-                    fontSize: 40,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SearchWidget(onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => search()));
-              }),
-              SizedBox(
-                height: 10,
-              ),
-              heading(
-                text: 'Popular jobs',
-                OnTap: () {},
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.24,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return JobHolding(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  job(title: "Facebook", id: "m")));
+      body: Consumer<jobNotifier>(
+        builder: (context, jobNotifier, child) {
+          jobNotifier.jobget();
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+
+                  children: [
+                   
+                     Align(
+                       alignment: Alignment.topLeft,
+                       child: Text(
+                        "Search \n Find & Apply",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          
+                        ),
+                                          
+                                           ),
+                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SearchWidget(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) =>const search()),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    heading(
+                      text: 'Popular jobs',
+                      OnTap: () {},
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.34,
+                      child: FutureBuilder(
+                        future: jobNotifier.joblist,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            print('${snapshot.error}');
+                            return Text("Error: ${snapshot.error}");
+                          } else {
+                            var jobs = snapshot.data;
+                            return ListView.builder(
+   scrollDirection: Axis.horizontal,
+                              itemCount: jobs!.length,
+                              itemBuilder: (context, index) {
+                                final jobt = jobs[index];
+                                return JobHolding(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => job(
+                                          title: jobt.company,
+                                          id: jobt.id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  job: jobt,
+                                );
+                              },
+                            );
+                          }
                         },
-                      );
-                    }),
+                      ),
+                    ),
+                    heading(
+                      text: 'Recent jobs',
+                      OnTap: () {},
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.2,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return verticaltile(
+                            onTap: () {},
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              heading(
-                text: 'Recent jobs',
-                OnTap: () {},
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return verticaltile(
-                        onTap: () {},
-                      );
-                    }),
-              ),
-            ],
-          ),
-        ),
-      )),
+            ),
+          );
+        },
+      ),
     );
   }
 }

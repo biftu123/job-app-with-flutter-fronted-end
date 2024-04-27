@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:jobapp/model/response/jobresponsemodel.dart';
 
 class JobHolding extends StatelessWidget {
   const JobHolding({
     Key? key,
-    this.onTap,
+    this.onTap, required this.job,
   }) : super(key: key);
 
   final void Function()? onTap;
-
+   final JobResponse job;
   @override
   Widget build(BuildContext context) {
+    
     return GestureDetector(
       onTap: onTap,
       child: Flexible(
@@ -32,29 +35,30 @@ class JobHolding extends StatelessWidget {
             ],
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+          
             children: [
               Row(
+                
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    backgroundImage: const AssetImage(
-                        'assets/images/page1.jpg'), // Use const for assets
+                    backgroundImage:NetworkImage(job.imageUrl) // Use const for assets
                   ),
-                  const SizedBox(width: 12),
-                  Text(
-                    'Facebook',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                         const SizedBox(width:12.0),
+                   Text(
+                      job.company,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
+                  
                 ],
               ),
-              const SizedBox(height: 8),
+            
               Text(
-                'Senior Flutter Developer',
+                job.title,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -62,16 +66,19 @@ class JobHolding extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Row(
+                
                 children: [
+                  
                   Text(
-                    '15K',
+                    job.salary,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                   
                   Text(
-                    '/ monthly',
+                  " / ${job.contract}",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
