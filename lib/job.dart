@@ -1,13 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobapp/controller/bookmarknotifier.dart';
 
 import 'package:jobapp/controller/jobNotifire.dart';
+import 'package:jobapp/model/request/bookmarkrequst.dart';
 
 import 'package:provider/provider.dart';
 
 class job extends StatefulWidget {
-  const job({
+  const job( {
     Key? key,
     required this.title,
     required this.id,
@@ -29,10 +31,33 @@ class _jobState extends State<job> {
             appBar: AppBar(
               title: Text(widget.title),
               centerTitle: true,
-               leading:IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () => Get.back(),
-      ),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Get.back(),
+              ),
+              actions: [
+                Consumer<BookmarkmarkNotifier>(
+                  builder: (context, bookmarkmarkNotifier, child) {
+                    bookmarkmarkNotifier.loadjob();
+                    return GestureDetector(
+                        onTap: () {
+                          if (bookmarkmarkNotifier.jobs.contains(widget.id)) {
+                            bookmarkmarkNotifier.Deletebokmark(widget.id);
+                          } else {
+                            Bookmarkrequest model =
+                                Bookmarkrequest(job: widget.id);
+                            bookmarkmarkNotifier.Addbokmark(model, widget.id);
+                          }
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 15),
+                          child: !bookmarkmarkNotifier.jobs.contains(widget.id)
+                              ? Icon(Icons.bookmark_add)
+                              : Icon(Icons.bookmark_added_outlined),
+                        ));
+                  },
+                )
+              ],
             ),
             body: FutureBuilder(
                 future: jobNotifier.job,

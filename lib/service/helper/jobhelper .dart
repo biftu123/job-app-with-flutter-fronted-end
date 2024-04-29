@@ -9,7 +9,7 @@ class JobHelper {
 
     final response = await client.get(
       Uri.parse(
-          "http://192.168.134.23:4006/job"), // Replace with your API endpoint
+          "http://192.168.97.23:4006/job"), // Replace with your API endpoint
       headers: requestHeaders,
     );
 
@@ -28,7 +28,7 @@ class JobHelper {
 
     try {
       final response = await client.get(
-        Uri.parse('http://192.168.134.23:4006/job/${jobId}'),
+        Uri.parse('http://192.168.97.23:4006/job/${jobId}'),
         headers: requestHeaders,
       );
 
@@ -63,7 +63,7 @@ class JobHelper {
 
     final response = await client.get(
       Uri.parse(
-          "http://192.168.134.23/job"), // Replace with your API endpoint
+          "http://192.168.97.23/job"), // Replace with your API endpoint
       headers: requestHeaders,
     );
 
@@ -81,7 +81,7 @@ class JobHelper {
 
     final response = await client.get(
       Uri.parse(
-          "http://192.168.134.23:4006/job/search/${searchkey}"), // Replace with your API endpoint
+          "http://192.168.97.23:4006/job/search/${searchkey}"), // Replace with your API endpoint
       headers: requestHeaders,
     );
 

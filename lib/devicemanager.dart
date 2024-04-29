@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
 import 'package:jobapp/controller/logInNotifier.dart';
 import 'package:jobapp/controller/onbordnotifier.dart';
 
 import 'package:jobapp/deviceInfo.dart';
+import 'package:jobapp/logIn.dart';
 
 import 'package:provider/provider.dart';
 
@@ -23,7 +25,7 @@ class _deviceManagerState extends State<deviceManager> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('chat page'),
+        title: Text('Device Manager'),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.menu),
@@ -67,6 +69,8 @@ class _deviceManagerState extends State<deviceManager> {
               child: GestureDetector(
                 onTap: () {
                   logInNotfier.userlogout();
+                  Get.off(LogIn());
+                  
                 },
                 child: Text(
                   "Sign Out from all device",

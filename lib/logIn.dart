@@ -32,13 +32,9 @@ class _LogInState extends State<LogIn> {
       appBar: AppBar(
         title: const Text(
           'LOGIN',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
         ),
         centerTitle: true,
-        leading:IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () => Get.back(),
-      ),
       ),
       body: Consumer<logInNotfier>(
         builder: (context, logInNotifier, _) {

@@ -3,6 +3,7 @@ import 'package:jobapp/chat.dart';
 import 'package:jobapp/devicemanager.dart';
 import 'package:jobapp/drawer/ZoomNotifier.dart';
 import 'package:jobapp/drawer/drawerScreen.dart';
+import 'package:jobapp/home.dart/bookmark.dart';
 import 'package:jobapp/home.dart/home.dart';
 import 'package:jobapp/profile.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class _mainScreenState extends State<mainScreen> {
           }),
           mainScreen: currentScreen(),
           borderRadius: 10,
-          angle: 0.0,
+          angle: 0,
           slideWidth:250,
           showShadow: true,
         );
@@ -43,7 +44,7 @@ class _mainScreenState extends State<mainScreen> {
       case 1:
         return const chat();
       case 2:
-        return const Home(); // Consider a different screen for index 2
+        return const Bookmark(); // Consider a different screen for index 2
       case 3:
         return const deviceManager();
       case 4:
