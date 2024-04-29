@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:jobapp/controller/jobNotifire.dart';
+
 import 'package:provider/provider.dart';
 
 class job extends StatefulWidget {
@@ -26,12 +29,10 @@ class _jobState extends State<job> {
             appBar: AppBar(
               title: Text(widget.title),
               centerTitle: true,
-              actions: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.bookmark_add),
-                )
-              ],
+               leading:IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () => Get.back(),
+      ),
             ),
             body: FutureBuilder(
                 future: jobNotifier.job,
@@ -62,8 +63,8 @@ class _jobState extends State<job> {
                                     ),
                                     Center(
                                       child: CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                            jobd!.imageUrl),
+                                        backgroundImage:
+                                            NetworkImage(jobd!.imageUrl),
                                         radius: 20,
                                       ),
                                     ),

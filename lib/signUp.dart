@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jobapp/controller/logInNotifier.dart';
 import 'package:jobapp/controller/signUpNotifier.dart';
 import 'package:jobapp/logIn.dart';
@@ -137,7 +138,7 @@ class _SignUpState extends State<SignUp> {
                             username: name.text,
                             email: email.text,
                             password: password.text);
-                        signUpNotfier.userSignUp(context, model);
+                        signUpNotfier.userSignUp( model);
                       }
                     },
                     child: Text('SignUp'),
@@ -152,8 +153,7 @@ class _SignUpState extends State<SignUp> {
                       TextButton(
                         onPressed: () {
                           loginnotifier.firsttime = !loginnotifier.firsttime;
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => LogIn()));
+                          Get.to(LogIn());
                         },
                         child: Text('Login'),
                       ),

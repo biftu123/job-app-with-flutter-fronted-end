@@ -149,7 +149,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                               phonenumber: phoneNumber.text,
                               profile: imageprovider.imageUrl.toString(),
                             );
-                            logInNotifier.updateuser(context, model);
+                            logInNotifier.updateuser( model);
                             
                           }
                         },

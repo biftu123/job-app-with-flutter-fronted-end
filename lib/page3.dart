@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jobapp/logIn.dart';
+
 import 'package:jobapp/signUp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,18 +47,16 @@ class _page3State extends State<page3> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-
-                  onPressed: ()async {
-                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+                  onPressed: () async {
+                    final SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     await prefs.setBool('entrypoint', true);
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => LogIn()));
+                    Get.off(LogIn());
                   },
                   child: Text("LOGIN")),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SignUp()));
+                    Get.off(SignUp());
                   },
                   child: Text("SIGNUP"))
             ],

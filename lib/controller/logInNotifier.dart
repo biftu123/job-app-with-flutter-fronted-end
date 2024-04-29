@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:jobapp/mainScreen.dart';
 import 'package:jobapp/model/request/loginrequst.dart';
 import 'package:jobapp/model/request/upskill.dart';
 import 'package:jobapp/model/request/userupdaterequstmodel.dart';
+
 
 import 'package:jobapp/profileDetails.dart';
 import 'package:jobapp/service/helper/authhelper.dart';
@@ -24,88 +26,88 @@ class logInNotfier extends ChangeNotifier {
     notifyListeners();
   }
 
-    userlogin(BuildContext context, Login model) {
+  userlogin(Login model) {
     AuthHelper.login(model).then((response) {
       if (response && firsttime) {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const ProfileDetails()),
-        );
+        Get.snackbar('succeslogin', "your are successfull login",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Colors.blue, // Optional: Set background color
+            duration: Duration(seconds: 2));
+        Get.to(const ProfileDetails());
       } else if (response && !firsttime) {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const mainScreen()),
-        );
+        Get.snackbar('succeslogin', "your are successfull login",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Colors.blue, // Optional: Set background color
+            duration: Duration(seconds: 2));
+        Get.to(const ProfileDetails());
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Login failed'),
-            key: const Key('login_failed_snackbar'), // Add a unique key
-          ),
-        );
+        Get.snackbar('Failedlogin', "your are Failed login",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Color.fromRGBO(
+                243, 33, 33, 1), // Optional: Set background color
+            duration: Duration(seconds: 2));
       }
     });
   }
 
-  
-  updateuser(BuildContext context, UserupdaterequstModel model) async {
+  updateuser(UserupdaterequstModel model) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString("userId");
     print(userId);
     if (userId != null) {
-      AuthHelper.updateuser(model, ).then((response) {
+      AuthHelper.updateuser(
+        model,
+      ).then((response) {
         if (response) {
-         
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const mainScreen()),
-          );
+          Get.snackbar('succesupdate', "your are successfull login",
+              snackPosition: SnackPosition
+                  .TOP, // Optional: Set position (default is BOTTOM)
+              backgroundColor: Colors.blue, // Optional: Set background color
+              duration: Duration(seconds: 2));
+          Get.off(const mainScreen());
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('update failed'),
-              key: const Key('update_failed_snackbar'), // Add a unique key
-            ),
-          );
+           Get.snackbar('Failedupdate', "your are Failed update",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Color.fromRGBO(
+                243, 33, 33, 1), // Optional: Set background color
+            duration: Duration(seconds: 2));
         }
       });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('User ID not found'),
-          key: const Key('user_id_not_found_snackbar'), // Add a unique key
-        ),
-      );
-    }
+    } 
   }
 
-   upskill(BuildContext context, Upskill model) async {
+  upskill(Upskill model) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString("userId");
     print(userId);
     if (userId != null) {
       AuthHelper.updateskill(model).then((response) {
         if (response) {
-         
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const mainScreen()),
-          );
+          Get.snackbar('succesupdate', "your are successfull login",
+              snackPosition: SnackPosition
+                  .TOP, // Optional: Set position (default is BOTTOM)
+              backgroundColor: Colors.blue, // Optional: Set background color
+              duration: Duration(seconds: 2));
+          Get.off(const mainScreen());
+          
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('update failed'),
-              key: const Key('update_failed_snackbar'), // Add a unique key
-            ),
-          );
+           Get.snackbar('Failedupdate', "your are Failed update",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Color.fromRGBO(
+                243, 33, 33, 1), // Optional: Set background color
+            duration: Duration(seconds: 2));
         }
       });
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('User ID not found'),
-          key: const Key('user_id_not_found_snackbar'), // Add a unique key
-        ),
-      );
+
+     
     }
   }
-
 
   userlogout() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

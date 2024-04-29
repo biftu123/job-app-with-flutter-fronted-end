@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
 import 'package:jobapp/controller/jobNotifire.dart';
 import 'package:jobapp/controller/verticalTile.dart';
 import 'package:jobapp/home.dart/heading.dart';
 import 'package:jobapp/home.dart/jobholding.dart';
 import 'package:jobapp/home.dart/searchwidget.dart';
+import 'package:jobapp/home.dart/viewalljob.dart';
 import 'package:jobapp/job.dart';
 import 'package:jobapp/search.dart';
 import 'package:provider/provider.dart';
@@ -17,12 +19,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  @override
-  void initState() {
-      Provider.of<jobNotifier>(context, listen: false).jobget();
-    // TODO: implement initState
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,44 +42,42 @@ class _HomeState extends State<Home> {
       body: Consumer<jobNotifier>(
         builder: (context, jobNotifier, child) {
           jobNotifier.jobget();
+          jobNotifier.recentjob();
           return SafeArea(
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(15),
                 child: Column(
-
                   children: [
-                   
-                     Align(
-                       alignment: Alignment.topLeft,
-                       child: Text(
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
                         "Search \n Find & Apply",
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          
                         ),
-                                          
-                                           ),
-                     ),
+                      ),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
                     SearchWidget(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) =>const search()),
-                        );
+                        Get.to(search());
                       },
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     heading(
-                      text: 'Popular jobs',
-                      OnTap: () {},
-                    ),
+                        text: 'Popular jobs',
+                        OnTap: () {
+                          {
+                            Get.to(ViewAllJob());
+                          }
+                        }),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.34,
                       child: FutureBuilder(
@@ -100,20 +94,14 @@ class _HomeState extends State<Home> {
                           } else {
                             var jobs = snapshot.data;
                             return ListView.builder(
-   scrollDirection: Axis.horizontal,
+                              scrollDirection: Axis.horizontal,
                               itemCount: jobs!.length,
                               itemBuilder: (context, index) {
                                 final jobt = jobs[index];
                                 return JobHolding(
                                   onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => job(
-                                          title: jobt.company,
-                                          id: jobt.id,
-                                        ),
-                                      ),
-                                    );
+                                    Get.to(
+                                        job(title: jobt.company, id: jobt.id));
                                   },
                                   job: jobt,
                                 );
@@ -128,19 +116,29 @@ class _HomeState extends State<Home> {
                       OnTap: () {},
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.2,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return verticaltile(
-                            onTap: () {},
-                          );
-                        },
-                      ),
-                    ),
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        child: FutureBuilder(
+                            future: jobNotifier.recent,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("Error: ${snapshot.error}");
+                              } else {
+                                var recents = snapshot.data;
+                                return verticaltile(
+                                  onTap: () {
+                                    Get.to(job(
+                                        title: recents!.company,
+                                        id: recents.id));
+                                  },
+                                  job: recents,
+                                );
+                              }
+                            }))
                   ],
                 ),
               ),

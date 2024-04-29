@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:jobapp/controller/logInNotifier.dart';
 import 'package:jobapp/model/request/loginrequst.dart';
@@ -34,6 +35,10 @@ class _LogInState extends State<LogIn> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        leading:IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () => Get.back(),
+      ),
       ),
       body: Consumer<logInNotfier>(
         builder: (context, logInNotifier, _) {
@@ -84,7 +89,8 @@ class _LogInState extends State<LogIn> {
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
-                          logInNotifier.obscureText = !logInNotifier.obscureText;
+                          logInNotifier.obscureText =
+                              !logInNotifier.obscureText;
                         },
                         icon: Icon(logInNotifier.obscureText
                             ? Icons.visibility_off
@@ -105,13 +111,14 @@ class _LogInState extends State<LogIn> {
                         // Handle form submission logic (e.g., register user)
                         Login model =
                             Login(email: email.text, password: password.text);
-                        logInNotifier.userlogin(context, model);
+                        logInNotifier.userlogin(model);
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text('Sign in failed. Check your credentials.'),
-                          ),
-                        );
+                         Get.snackbar('Failedlogin', "your are Failed login",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Color.fromRGBO(
+                243, 33, 33, 1), // Optional: Set background color
+            duration: Duration(seconds: 2));
                       }
                     },
                     child: const Text('Sign Up'),
@@ -123,9 +130,7 @@ class _LogInState extends State<LogIn> {
                       const Text('Don\'t have an account?'),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SignUp(),
-                          ));
+                          Get.off(SignUp());
                         },
                         child: const Text('Sign Up'),
                       ),

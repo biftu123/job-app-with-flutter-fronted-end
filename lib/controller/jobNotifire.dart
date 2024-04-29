@@ -5,6 +5,7 @@ import 'package:jobapp/service/helper/jobhelper%20.dart';
 
 class jobNotifier extends ChangeNotifier {
   Future<List<JobResponse>>? joblist;
+  Future<JobResponse>? recent;
   Future<Getjobres>? job;
   jobget() async {
     joblist = JobHelper.getJobs();
@@ -12,5 +13,9 @@ class jobNotifier extends ChangeNotifier {
 
   jobgets(String jobId) async {
     job = JobHelper.getJob(jobId);
+  }
+
+  recentjob() async {
+    recent = JobHelper.recentJobs();
   }
 }

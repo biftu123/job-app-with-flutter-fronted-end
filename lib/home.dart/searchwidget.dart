@@ -16,14 +16,14 @@ class SearchWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.74,
+                width: MediaQuery.of(context).size.width * 0.84,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
                       Icons.search,
                       color: Colors.orange,
-                      size: 20,
+                      size: 30,
                     ),
                     SizedBox(
                       width: 20,
@@ -32,7 +32,7 @@ class SearchWidget extends StatelessWidget {
                       child: Text(
                         'search job',
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w500),
+                            fontSize: 30, fontWeight: FontWeight.w500),
                       ),
                     )
                   ],
@@ -40,7 +40,7 @@ class SearchWidget extends StatelessWidget {
               ),
               Icon(
                 Icons.menu,
-                size: 20,
+                size: 30,
               )
             ],
           ),
@@ -54,3 +54,5 @@ class SearchWidget extends StatelessWidget {
     );
   }
 }
+
+                           

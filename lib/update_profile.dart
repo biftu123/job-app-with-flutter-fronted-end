@@ -80,7 +80,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       skills.add(skillsControllers[i].text);
                     }
                     Upskill model = Upskill(skill: skills);
-                    logInNotfier.upskill(context, model);
+                    logInNotfier.upskill( model);
                   },
                   child: Text('Save'),
                 ),

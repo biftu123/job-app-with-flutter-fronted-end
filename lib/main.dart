@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:jobapp/controller/imageUploader.dart';
 import 'package:jobapp/controller/jobNotifire.dart';
 import 'package:jobapp/controller/logInNotifier.dart';
@@ -49,9 +51,9 @@ class MyApp extends StatelessWidget {
          ChangeNotifierProvider(create: (_) => imageUploader()),
                  ChangeNotifierProvider(create: (_) => Profilenotifir()),
                   ChangeNotifierProvider(create: (_) => jobNotifier()),
-
+                   
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home: DefaultWidget ,
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 import 'package:jobapp/controller/profileNotifir.dart';
@@ -15,11 +14,7 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
-  void initState() {
-    super.initState();
-    // Call the getuser() method here to fetch the user data
-    Provider.of<Profilenotifir>(context, listen: false).getuser();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +74,22 @@ class _profileState extends State<profile> {
                                     Text(userdata.email,
                                         style: TextStyle(fontSize: 15))
                                   ],
-                                  
                                 ),
-                                Expanded(child: TextButton.icon(onPressed: (){
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> UpdateProfile(skill: userdata.skill)));
-                                }, icon: Icon(Icons.edit,size: 20,), label: Text("Update profile")))
+                                Expanded(
+                                    child: TextButton.icon(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UpdateProfile(
+                                                          skill:
+                                                              userdata.skill)));
+                                        },
+                                        icon: Icon(
+                                          Icons.edit,
+                                          size: 20,
+                                        ),
+                                        label: Text("Update profile")))
                               ],
                             ),
                             SizedBox(
@@ -113,22 +119,20 @@ class _profileState extends State<profile> {
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-           Container(
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.4,
-                                    child: ListView.builder(
-                                        itemCount: userdata.skill.length,
-                                        itemBuilder: ((context, index) {
-                                          return Container(
-                                            height: 40,
-                                            child: Card(
-                                              child: Text(userdata.skill[index]),
-                                            ),
-                                          );
-                                        })),
-                                  ),
-                                  
-                                
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                  child: ListView.builder(
+                                      itemCount: userdata.skill.length,
+                                      itemBuilder: ((context, index) {
+                                        return Container(
+                                          height: 40,
+                                          child: Card(
+                                            child: Text(userdata.skill[index]),
+                                          ),
+                                        );
+                                      })),
+                                ),
                               ],
                             ),
                           ],

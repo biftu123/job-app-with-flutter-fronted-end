@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jobapp/logIn.dart';
+
 import 'package:jobapp/model/request/signuprequstmodel.dart';
 import 'package:jobapp/service/helper/authhelper.dart';
 
@@ -11,22 +13,23 @@ class signUpNotfier extends ChangeNotifier {
     notifyListeners();
   }
 
-  userSignUp(BuildContext context, Signupmodel model) {
+  userSignUp( Signupmodel model) {
     AuthHelper.SignUp(model).then((response) => {
       if(response){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('signup sucessfull'),
-          ),
-        ),
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const LogIn()))
+         Get.snackbar('succeslogin', "your are successfull login",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Colors.blue, // Optional: Set background color
+            duration: Duration(seconds: 2)),
+    Get.off(LogIn())
       }else (){
- ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('update faild'),
-            ),
-          );
+         Get.snackbar('Failedlogin', "your are Failed login",
+            snackPosition:
+                SnackPosition.TOP, // Optional: Set position (default is BOTTOM)
+            backgroundColor: Color.fromRGBO(
+                243, 33, 33, 1), // Optional: Set background color
+            duration: Duration(seconds: 2));
+ 
       }
     });
   }

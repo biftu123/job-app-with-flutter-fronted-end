@@ -9,7 +9,7 @@ class JobHelper {
 
     final response = await client.get(
       Uri.parse(
-          "http://192.168.103.23:4006/job"), // Replace with your API endpoint
+          "http://192.168.134.23:4006/job"), // Replace with your API endpoint
       headers: requestHeaders,
     );
 
@@ -28,7 +28,7 @@ class JobHelper {
 
     try {
       final response = await client.get(
-        Uri.parse('http://192.168.103.23:4006/job/${jobId}'),
+        Uri.parse('http://192.168.134.23:4006/job/${jobId}'),
         headers: requestHeaders,
       );
 
@@ -55,6 +55,42 @@ class JobHelper {
       throw Exception('Failed to get user profile: $error');
     } finally {
       client.close();
+    }
+  }
+   static Future<JobResponse> recentJobs() async {
+    final client = http.Client();
+    final requestHeaders = {'content-type': 'application/json'};
+
+    final response = await client.get(
+      Uri.parse(
+          "http://192.168.134.23/job"), // Replace with your API endpoint
+      headers: requestHeaders,
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = response.body;
+      var joblist = jobResponseFromJson(responseBody).first;
+      return joblist;
+    } else {
+      throw Exception('faild get job');
+    }
+  }
+  static Future<List<JobResponse>> searchjob(String searchkey) async {
+    final client = http.Client();
+    final requestHeaders = {'content-type': 'application/json'};
+
+    final response = await client.get(
+      Uri.parse(
+          "http://192.168.134.23:4006/job/search/${searchkey}"), // Replace with your API endpoint
+      headers: requestHeaders,
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = response.body;
+      var joblist = jobResponseFromJson(responseBody);
+      return joblist;
+    } else {
+      throw Exception('faild get job');
     }
   }
 }

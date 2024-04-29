@@ -20,7 +20,6 @@ class _deviceManagerState extends State<deviceManager> {
   @override
   Widget build(BuildContext context) {
     Provider.of<OnbordNotifier>(context);
-  
 
     return Scaffold(
       appBar: AppBar(
@@ -67,7 +66,7 @@ class _deviceManagerState extends State<deviceManager> {
               alignment: Alignment.bottomCenter,
               child: GestureDetector(
                 onTap: () {
-                  
+                  logInNotfier.userlogout();
                 },
                 child: Text(
                   "Sign Out from all device",
