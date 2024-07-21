@@ -4,12 +4,17 @@ import 'package:get/get.dart';
 import 'package:jobapp/controller/bookmarknotifier.dart';
 
 import 'package:jobapp/controller/jobNotifire.dart';
+import 'package:jobapp/mainScreen.dart';
 import 'package:jobapp/model/request/bookmarkrequst.dart';
+import 'package:jobapp/model/request/requstForSendMessege.dart';
+import 'package:jobapp/model/request/requstforinitmessage.dart';
+import 'package:jobapp/service/helper/MessageHelper.dart';
+import 'package:jobapp/service/helper/chathelper.dart';
 
 import 'package:provider/provider.dart';
 
 class job extends StatefulWidget {
-  const job( {
+  const job({
     Key? key,
     required this.title,
     required this.id,
@@ -197,7 +202,27 @@ class _jobState extends State<job> {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: TextButton(
-                                onPressed: () {}, child: Text("Apply For")),
+                                onPressed: () {
+                                  Requstforsinitmessage model =
+                                      Requstforsinitmessage(id: jobd.AgentId);
+                                  ChatHelper.applychat(model).then((response) {
+                                    if (response[0]) {
+                                      RequestForSendMessege model =
+                                          RequestForSendMessege(
+                                              chatId: response[1],
+                                              content:
+                                                  "went to apply to this job",
+                                              receiver: jobd.AgentId);
+                                      MessageHelper.applychat(model)
+                                          .then((response) {
+                                        if (response[0]) {
+                                          Get.to(() => const mainScreen());
+                                        }
+                                      });
+                                    }
+                                  });
+                                },
+                                child: Text("Apply For")),
                           )
                         ],
                       ),

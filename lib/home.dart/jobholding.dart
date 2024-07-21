@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:jobapp/model/response/jobresponsemodel.dart';
 
 class JobHolding extends StatelessWidget {

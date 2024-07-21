@@ -39,11 +39,11 @@ class Bookmarktile extends StatelessWidget {
                     CircleAvatar(
                       radius: 20,
                       backgroundImage: NetworkImage(
-                        job.job.imageUrl ?? '', // Use null-aware operator and provide a default value
+                        job.job.imageUrl, // Use null-aware operator and provide a default value
                       ),
                     ),
                     Text(
-                      job.job.company ?? '', // Use null-aware operator and provide a default value
+                      job.job.company , // Use null-aware operator and provide a default value
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -53,7 +53,7 @@ class Bookmarktile extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  job.job.title ?? '', // Use null-aware operator and provide a default value
+                  job.job.title, // Use null-aware operator and provide a default value
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -62,14 +62,14 @@ class Bookmarktile extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      job.job.salary ?? '', // Use null-aware operator and provide a default value
+                      job.job.salary, // Use null-aware operator and provide a default value
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
-                      '/ ${job.job.contract ?? ''}', // Use null-aware operator and provide a default value
+                      '/ ${job.job.contract }', // Use null-aware operator and provide a default value
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

@@ -18,6 +18,7 @@ class Getjobres {
     final String period;
     final String contract;
     final List<String> requirments;
+    final String AgentId;
     final String imageUrl;
     final DateTime createdAt;
     final DateTime updatedAt;
@@ -34,6 +35,7 @@ class Getjobres {
         required this.requirments,
         required this.imageUrl,
         required this.createdAt,
+         required this.AgentId,
         required this.updatedAt,
         required this.v,
     });
@@ -43,6 +45,7 @@ class Getjobres {
         title: json["title"],
         location: json["location"],
         descrption: json["descrption"],
+           AgentId: json["AgentId"],
         salary: json["salary"],
         period: json["period"],
         contract: json["contract"],
@@ -56,6 +59,7 @@ class Getjobres {
     Map<String, dynamic> toJson() => {
         "_id": id,
         "title": title,
+         "AgentId": AgentId,
         "location": location,
         "descrption": descrption,
         "salary": salary,

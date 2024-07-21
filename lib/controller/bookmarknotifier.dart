@@ -16,7 +16,7 @@ class BookmarkmarkNotifier extends ChangeNotifier {
 
   Future<void> addjobs(String jobId) async {
     final prefs = await SharedPreferences.getInstance();
-    if (_jobs != null) {
+    if (_jobs .isNotEmpty) {
       _jobs.insert(0, jobId);
       prefs.setStringList("jobId", jobs);
       notifyListeners();
@@ -25,7 +25,7 @@ class BookmarkmarkNotifier extends ChangeNotifier {
 
   Future<void> removejobs(String jobId) async {
     final prefs = await SharedPreferences.getInstance();
-    if (_jobs != null) {
+    if (_jobs.isNotEmpty) {
       _jobs.remove(jobId);
       prefs.setStringList("jobId", jobs);
       notifyListeners();
@@ -35,7 +35,7 @@ class BookmarkmarkNotifier extends ChangeNotifier {
   Future<void> loadjob() async {
     final pref = await SharedPreferences.getInstance();
     final jobs = pref.getStringList("jobId");
-    if (jobs != null) {
+    if (jobs !.isNotEmpty) {
       _jobs = jobs;
       notifyListeners();
     }

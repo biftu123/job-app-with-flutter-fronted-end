@@ -42,7 +42,7 @@ class _mainScreenState extends State<mainScreen> {
       case 0:
         return const Home();
       case 1:
-        return const chat();
+        return const Chat();
       case 2:
         return const Bookmark(); // Consider a different screen for index 2
       case 3:

@@ -20,7 +20,7 @@ class AuthHelper {
 
     try {
       var response = await client.post(
-          Uri.parse("http://192.168.97.23:4006/login"),
+          Uri.parse("http://192.168.100.4:3001/login"),
           body: jsonEncode(model),
           headers: requestHeaders);
 
@@ -61,7 +61,7 @@ class AuthHelper {
 
     try {
       var response = await client.put(
-        Uri.parse("http://192.168.97.23:4006/users/update/"),
+        Uri.parse("http://192.168.100.4:3001/users/update/"),
         body: jsonEncode(model),
         headers: requestHeaders,
       );
@@ -94,7 +94,7 @@ class AuthHelper {
 
     try {
       var response = await client.get(
-        Uri.parse("http://192.168.97.23:4006/users/getuser/"),
+        Uri.parse("http://192.168.100.4:3001/users/getuser/"),
         
         headers: requestHeaders,
       );
@@ -126,7 +126,7 @@ class AuthHelper {
 
     try {
       var response = await client.post(
-          Uri.parse("http://192.168.97.23:4006/register"),
+          Uri.parse("http://192.168.100.4:3001/register"),
           body: jsonEncode(model),
           headers: requestHeaders);
 
@@ -158,7 +158,7 @@ class AuthHelper {
 
     try {
       var response = await client.put(
-        Uri.parse("http://192.168.97.23:4006/users/update/"),
+        Uri.parse("http://192.168.100.4:3001/users/update/"),
         body: jsonEncode(model),
         headers: requestHeaders,
       );

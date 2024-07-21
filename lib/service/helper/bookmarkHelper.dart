@@ -19,7 +19,7 @@ class BookmarkHelper {
 
     try {
       var response = await client.post(
-          Uri.parse("http://192.168.97.23:4006/bookmark/create"),
+          Uri.parse("http://192.168.100.4:3001/bookmark/create"),
           headers: requestHeaders,
           body: jsonEncode(model.toJson()));
 
@@ -49,7 +49,7 @@ class BookmarkHelper {
 
     try {
       var response = await client.delete(
-          Uri.parse("http://192.168.97.23:4006/bookmark/${jobId}"),
+          Uri.parse("http://192.168.100.4:3001/bookmark/${jobId}"),
           headers: requestHeaders);
       if (response.statusCode == 200) {
         return true;
@@ -75,7 +75,7 @@ class BookmarkHelper {
 
     final response = await client.get(
       Uri.parse(
-          "http://192.168.97.23:4006/bookmark/"), // Replace with your API endpoint
+          "http://192.168.100.4:3001/bookmark"), // Replace with your API endpoint
       headers: requestHeaders,
     );
 
