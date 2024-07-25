@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:jobapp/controller/jobNotifire.dart';
+import 'package:jobapp/controller/profileNotifir.dart';
 import 'package:jobapp/controller/verticalTile.dart';
 import 'package:jobapp/home.dart/heading.dart';
 import 'package:jobapp/home.dart/jobholding.dart';
 import 'package:jobapp/home.dart/searchwidget.dart';
 import 'package:jobapp/home.dart/viewalljob.dart';
 import 'package:jobapp/job.dart';
+
 import 'package:jobapp/search.dart';
 import 'package:provider/provider.dart';
 
@@ -32,10 +34,31 @@ class _HomeState extends State<Home> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 40),
-            child: CircleAvatar(
-              radius: 15,
-              backgroundImage: AssetImage('assets/images/page1.jpg'),
-            ),
+            child: Consumer<Profilenotifir>(
+                builder: (context, Profilenotifir, child) {
+              Profilenotifir.getuser();
+              return FutureBuilder(
+                  future: Profilenotifir.profile,
+                  builder: (context, snapshopt) {
+                    if (snapshopt.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshopt.hasError) {
+                      return Text('error');
+                    } else {
+                      var userdata = snapshopt.data;
+                      return Column(
+                        children: [ CircleAvatar(
+                          backgroundImage: NetworkImage(userdata!.profile),
+                          radius: 18,
+                        ),
+                        Expanded(child: Text(userdata.username))
+                        ]
+                      );
+                    }
+                  });
+            }),
           ),
         ],
       ),
@@ -65,19 +88,18 @@ class _HomeState extends State<Home> {
                     ),
                     SearchWidget(
                       onTap: () {
-                        Get.to(search());
+                        Get.to(() => search());
                       },
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     heading(
-                        text: 'Popular jobs',
-                        OnTap: () {
-                          {
-                            Get.to(ViewAllJob());
-                          }
-                        }),
+                      text: 'Popular jobs',
+                      OnTap: () {
+                        Get.to(() => ViewAllJob());
+                      },
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.34,
                       child: FutureBuilder(
@@ -100,7 +122,7 @@ class _HomeState extends State<Home> {
                                 final jobt = jobs[index];
                                 return JobHolding(
                                   onTap: () {
-                                    Get.to(
+                                    Get.to(() =>
                                         job(title: jobt.company, id: jobt.id));
                                   },
                                   job: jobt,
@@ -116,29 +138,38 @@ class _HomeState extends State<Home> {
                       OnTap: () {},
                     ),
                     SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        child: FutureBuilder(
-                            future: jobNotifier.recent,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else if (snapshot.hasError) {
-                                return Text("Error: ${snapshot.error}");
-                              } else {
-                                var recents = snapshot.data;
-                                return verticaltile(
-                                  onTap: () {
-                                    Get.to(job(
-                                        title: recents!.company,
-                                        id: recents.id));
-                                  },
-                                  job: recents,
-                                );
-                              }
-                            }))
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      child: FutureBuilder(
+                        future: jobNotifier.recent,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          } else {
+                            var recents = snapshot.data;
+                            return Flex(
+                              direction: Axis.horizontal,
+                              children: [
+                                Expanded(
+                                  child: verticaltile(
+                                    onTap: () {
+                                      Get.to(() => job(
+                                          title: recents!.company,
+                                          id: recents.id));
+                                    },
+                                    job: recents,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),

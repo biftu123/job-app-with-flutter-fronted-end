@@ -30,7 +30,7 @@ class BookmarkHelper {
         return [false];
       }
     } catch (error) {
-      // Handle potential errors from the http package
+      // Handle potent
       throw Exception('Failed to get user profile: $error');
     } finally {
       client.close();
@@ -64,7 +64,7 @@ class BookmarkHelper {
     }
   }
 
-  static Future<List<AllbookMark>> getJobs() async {
+  static Future<List<Allbookmark>> getJobs() async {
     final client = http.Client();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -81,7 +81,7 @@ class BookmarkHelper {
 
     if (response.statusCode == 200) {
       final responseBody = response.body;
-      var bookmarklist = allbookMarkFromJson(responseBody);
+      var bookmarklist = allbookmarkFromJson(responseBody);
       return bookmarklist;
     } else {
       throw Exception('faild get bookmark');

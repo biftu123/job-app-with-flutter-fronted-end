@@ -48,6 +48,9 @@ class Job {
     final String contract;
     final List<String> requirments;
     final String imageUrl;
+    final String agentId;
+    final DateTime createdAt;
+    final DateTime updatedAt;
     final int v;
 
     Job({
@@ -61,6 +64,9 @@ class Job {
         required this.contract,
         required this.requirments,
         required this.imageUrl,
+        required this.agentId,
+        required this.createdAt,
+        required this.updatedAt,
         required this.v,
     });
 
@@ -75,6 +81,9 @@ class Job {
         contract: json["contract"],
         requirments: List<String>.from(json["requirments"].map((x) => x)),
         imageUrl: json["imageUrl"],
+        agentId: json["AgentId"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
     );
 
@@ -89,6 +98,9 @@ class Job {
         "contract": contract,
         "requirments": List<dynamic>.from(requirments.map((x) => x)),
         "imageUrl": imageUrl,
+        "AgentId": agentId,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
     };
 }

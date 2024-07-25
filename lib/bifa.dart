@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class Bifa extends StatelessWidget {
   const Bifa({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
   // ignore: empty_constructor_bodies
   final String text;
   @override

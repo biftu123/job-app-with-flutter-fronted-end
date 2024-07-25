@@ -26,7 +26,7 @@ class Chatnotfier extends ChangeNotifier {
 
   String? userId;
   getChats() async {
-    chatsList = ChatHelper.getconversation();
+    chatsList = ChatHelper.getConversation();
   }
 
   getPrefs() async {

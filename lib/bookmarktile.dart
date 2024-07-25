@@ -3,13 +3,13 @@ import 'package:jobapp/model/response/allbookmark.dart';
 
 class Bookmarktile extends StatelessWidget {
   const Bookmarktile({
-    Key? key,
+    super.key,
     this.onTap,
     required this.job,
-  }) : super(key: key);
+  });
 
   final void Function()? onTap;
-  final AllbookMark job;
+  final Allbookmark job;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class Bookmarktile extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color.fromARGB(255, 151, 150, 150),
+              color: const Color.fromARGB(255, 151, 150, 150),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
@@ -44,7 +44,7 @@ class Bookmarktile extends StatelessWidget {
                     ),
                     Text(
                       job.job.company , // Use null-aware operator and provide a default value
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -54,7 +54,7 @@ class Bookmarktile extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   job.job.title, // Use null-aware operator and provide a default value
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

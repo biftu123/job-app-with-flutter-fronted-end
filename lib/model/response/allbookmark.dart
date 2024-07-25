@@ -1,11 +1,11 @@
 
 import 'dart:convert';
 
-List<AllbookMark> allbookMarkFromJson(String str) => List<AllbookMark>.from(json.decode(str).map((x) => AllbookMark.fromJson(x)));
+List<Allbookmark> allbookmarkFromJson(String str) => List<Allbookmark>.from(json.decode(str).map((x) => Allbookmark.fromJson(x)));
 
-String allbookMarkToJson(List<AllbookMark> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String allbookmarkToJson(List<Allbookmark> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class AllbookMark {
+class Allbookmark {
     final String id;
     final Job job;
     final String userId;
@@ -13,7 +13,7 @@ class AllbookMark {
     final DateTime updatedAt;
     final int v;
 
-    AllbookMark({
+    Allbookmark({
         required this.id,
         required this.job,
         required this.userId,
@@ -22,7 +22,7 @@ class AllbookMark {
         required this.v,
     });
 
-    factory AllbookMark.fromJson(Map<String, dynamic> json) => AllbookMark(
+    factory Allbookmark.fromJson(Map<String, dynamic> json) => Allbookmark(
         id: json["_id"],
         job: Job.fromJson(json["job"]),
         userId: json["userId"],
@@ -52,6 +52,7 @@ class Job {
     final String contract;
     final List<String> requirments;
     final String imageUrl;
+    final String agentId;
     final DateTime createdAt;
     final DateTime updatedAt;
     final int v;
@@ -67,6 +68,7 @@ class Job {
         required this.contract,
         required this.requirments,
         required this.imageUrl,
+        required this.agentId,
         required this.createdAt,
         required this.updatedAt,
         required this.v,
@@ -83,6 +85,7 @@ class Job {
         contract: json["contract"],
         requirments: List<String>.from(json["requirments"].map((x) => x)),
         imageUrl: json["imageUrl"],
+        agentId: json["AgentId"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
@@ -99,6 +102,7 @@ class Job {
         "contract": contract,
         "requirments": List<dynamic>.from(requirments.map((x) => x)),
         "imageUrl": imageUrl,
+        "AgentId": agentId,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,

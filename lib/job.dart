@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:jobapp/controller/bookmarknotifier.dart';
 
 import 'package:jobapp/controller/jobNotifire.dart';
-import 'package:jobapp/mainScreen.dart';
+import 'package:jobapp/home.dart/home.dart';
+
 import 'package:jobapp/model/request/bookmarkrequst.dart';
 import 'package:jobapp/model/request/requstForSendMessege.dart';
 import 'package:jobapp/model/request/requstforinitmessage.dart';
@@ -57,8 +58,8 @@ class _jobState extends State<job> {
                         child: Padding(
                           padding: EdgeInsets.only(right: 15),
                           child: !bookmarkmarkNotifier.jobs.contains(widget.id)
-                              ? Icon(Icons.bookmark_add)
-                              : Icon(Icons.bookmark_added_outlined),
+                              ? Icon(Icons.bookmark_add_outlined)
+                              : Icon(Icons.bookmark_remove_outlined),
                         ));
                   },
                 )
@@ -170,7 +171,7 @@ class _jobState extends State<job> {
                                 height: 10,
                               ),
                               Text(
-                                jobd.descrption,
+                                jobd.title,
                                 maxLines: 8,
                                 textAlign: TextAlign.justify,
                               ),
@@ -205,7 +206,7 @@ class _jobState extends State<job> {
                                 onPressed: () {
                                   Requstforsinitmessage model =
                                       Requstforsinitmessage(id: jobd.AgentId);
-                                  ChatHelper.applychat(model).then((response) {
+                                  ChatHelper.applyChat(model).then((response) {
                                     if (response[0]) {
                                       RequestForSendMessege model =
                                           RequestForSendMessege(
@@ -214,10 +215,8 @@ class _jobState extends State<job> {
                                                   "went to apply to this job",
                                               receiver: jobd.AgentId);
                                       MessageHelper.applychat(model)
-                                          .then((response) {
-                                        if (response[0]) {
-                                          Get.to(() => const mainScreen());
-                                        }
+                                          .whenComplete(() {
+                                        Get.to(Home());
                                       });
                                     }
                                   });

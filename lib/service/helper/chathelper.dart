@@ -1,70 +1,91 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:jobapp/model/request/requstforinitmessage.dart';
 import 'package:jobapp/model/response/getChat.dart';
-
+import 'package:jobapp/model/response/resposeforinitmessage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class ChatHelper {
-  static Future<List<Getchat>> getconversation() async {
+  static Future<List<Getchat>> getConversation() async {
     final client = http.Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      // Handle missing token (e.g., return empty list, show error message)
+      print('Error: Missing token for getting conversations.');
+      return [];
+    }
+
     final requestHeaders = {
       'content-type': 'application/json',
-      'token': 'job $token'
+      'token': 'job $token',
     };
 
     try {
       final response = await client.get(
-        Uri.parse(
-            "http://192.168.100.4:3001/chat"), // Replace with your API endpoint
+        Uri.parse("http://192.168.100.4:3001/chat"), // Replace with your API endpoint
         headers: requestHeaders,
       );
 
       if (response.statusCode == 200) {
-        var chats = getchatFromJson(response.body);
-        
+        final chats = getchatFromJson(response.body);
         return chats;
       } else {
-        throw Exception('Failed to get chats');
+        throw ChatException('Failed to get chats (status code: ${response.statusCode})');
       }
-    } catch (e) {
-      throw Exception('An error occurred while getting chats: $e');
+    } catch (error) {
+      throw ChatException('An error occurred while getting chats: $error');
     } finally {
       client.close();
     }
   }
-   static Future<List<dynamic>> applychat(Requstforsinitmessage model) async {
+
+  static Future<List<dynamic>> applyChat(Requstforsinitmessage model) async {
     final client = http.Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-    // ignore: unnecessary_brace_in_string_interps
-    Map<String, String> requestHeaders = {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      // Handle missing token (e.g., return error, show message)
+      print('Error: Missing token for applying chat.');
+      return [false, 'Missing token'];
+    }
+
+    final requestHeaders = {
       'content-type': 'application/json',
-      'token': 'job $token'
+      'token': 'job $token',
     };
 
     try {
-      var response = await client.post(
-          Uri.parse("http://192.168.100.4:3001/chat/biftu"),
-          headers: requestHeaders,
-          body: jsonEncode(model.toJson()));
+      final response = await client.post(
+        Uri.parse("http://192.168.100.4:3001/chat/biftu"), // Replace with your API endpoint
+        headers: requestHeaders,
+        body: jsonEncode(model.toJson()),
+      );
 
       if (response.statusCode == 200) {
-        var bookmarkId = requstforsinitmessageFromJson(response.body).id;
+        
+        final bookmarkId = responseforsinitmessageFromJson(response.body).id;
         return [true, bookmarkId];
       } else {
-        return [false];
+        return [false, 'Failed to apply chat (status code: ${response.statusCode})'];
       }
     } catch (error) {
-      // Handle potential errors from the http package
-      throw Exception('Failed to get user profile: $error');
+      throw ChatException('Error applying chat: $error');
     } finally {
       client.close();
     }
   }
+}
 
- 
+// Custom exception for ChatHelper errors
+class ChatException implements Exception {
+  final String message;
+
+  ChatException(this.message);
+
+  @override
+  String toString() => message;
 }
